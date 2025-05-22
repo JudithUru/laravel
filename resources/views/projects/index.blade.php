@@ -96,6 +96,7 @@
                 </table>
             </div>
         </div>
+        <a class="btn btn-primary" href="http://127.0.0.1:8000/project/create" role="button">Guardar un proyecto</a>
         <div class="row">
             <div class="col">
                 <footer>Hecho por Judith Uruchima</footer>
