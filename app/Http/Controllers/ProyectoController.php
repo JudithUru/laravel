@@ -51,22 +51,39 @@ class ProyectoController extends Controller
     public function edit($id)
     {
         $proyecto=Proyecto::find($id);
-        return view("projects/update", compact('proyecto'));
+        return view("projects/update", compact('proyecto')); //lo pasa a la vista lo que se consulta para id
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Proyecto $proyecto)
+    //recibe en el request todo el formulario y el id el parametro
+    //http://127.0.0.1:8000/project/1/edit
+    public function update(Request $request, $id)
     {
-        //
+        //validacion
+        $request->validate([
+            'titulo'=>'required|max:255',
+            'descripcion'=>'required'
+        ]);
+        //pasarle todo lo del proyecto
+        $proyecto=Proyecto::find($id);
+        $proyecto->update($request->all());
+        return redirect('project/')->with('success', 'Proyecto actualizado satisfactoriamente');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proyecto $proyecto)
+    public function destroy($id)
     {
-        //
+        //modificar el index, contruir un boton que llama a la ruta para eliminar para enviar el codifo de ese eleminar
+        $proyecto = Proyecto::findOrFail($id);
+        
+        // Eliminar el proyecto
+        $proyecto->delete();
+        
+        // Redirigir con un mensaje (opcional)
+        return redirect('project/')->with('success', 'Proyecto eliminado correctamente.');
     }
 }

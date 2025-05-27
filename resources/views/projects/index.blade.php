@@ -75,6 +75,8 @@
                         <th scope="col">Título</th>
                         <th scope="col">Descripción</th>
                         <th scope="col">Fecha de creación</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,9 +89,20 @@
                         @foreach($proyectos as $proyecto)
                         <tr>
                             <th scope="row">{{$proyecto->id}}</th>
-                            <th>{{$proyecto->titulo}}</th>
-                            <th>{{$proyecto->descripcion}}</th>
-                            <th>{{$proyecto->created_at}}</th>
+                            <td>{{$proyecto->titulo}}</td>
+                            <td>{{$proyecto->descripcion}}</td>
+                            <td>{{$proyecto->created_at}}</td>
+                            <td>
+                                <a href="{{ route('project.edit', $proyecto->id) }}" class="btn btn-outline-warning">Editar</a>
+                            </td>
+                            <td>  
+                                <form action="{{ route('project.destroy', $proyecto->id) }}" method="POST" onsubmit="return confirmarEliminacion()">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+
+                            </form>
+                            </td>
                         </tr>
                 @endforeach
                     </tbody>
@@ -103,6 +116,12 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"
+    ></script>
+    <script>
+    function confirmarEliminacion() {
+        return confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.');
+    }
+</script>
 </body>
 </html>
